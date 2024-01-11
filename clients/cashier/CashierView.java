@@ -22,6 +22,7 @@ public class CashierView implements Observer
   
   private static final String CHECK  = "Check";
   private static final String BUY    = "Buy";
+  private static final String REMOVE = "Remove";
   private static final String BOUGHT = "Bought";
 
   private final JLabel      theAction  = new JLabel();
@@ -31,6 +32,7 @@ public class CashierView implements Observer
   private final JButton     theBtCheck = new JButton( CHECK );
   private final JButton     theBtBuy   = new JButton( BUY );
   private final JButton     theBtBought= new JButton( BOUGHT );
+  private final JButton     theBtRemove= new JButton(REMOVE);
 
   private StockReadWriter theStock     = null;
   private OrderProcessing theOrder     = null;
@@ -70,9 +72,17 @@ public class CashierView implements Observer
     theBtBuy.setBounds( 16, 25+60*1, 80, 40 );      // Buy button 
     theBtBuy.addActionListener(                     // Call back code
       e -> cont.doBuy() );
-    cp.add( theBtBuy );                             //  Add to canvas
+    cp.add( theBtBuy );
+    theBtBuy.setForeground(Color.BLUE);
+
+    theBtRemove.setBounds( 16, 25+60*2, 80, 40 );      // Buy button
+    theBtRemove.addActionListener(                     // Call back code
+           e -> cont.doRemove(theInput.getText()) );
+    cp.add( theBtRemove );                             //  Add to canvas
+    theBtRemove.setForeground(Color.RED);
 
     theBtBought.setBounds( 16, 25+60*3, 80, 40 );   // Clear Button
+    theBtBought.setForeground(Color.GREEN);
     theBtBought.addActionListener(                  // Call back code
       e -> cont.doBought() );
     cp.add( theBtBought );                          //  Add to canvas
@@ -82,16 +92,22 @@ public class CashierView implements Observer
     cp.add( theAction );                            //  Add to canvas
 
     theInput.setBounds( 110, 50, 270, 40 );         // Input Area
-    theInput.setText("");                           // Blank
+    theInput.setText("");
+    theInput.setBackground(Color.LIGHT_GRAY);// Blank
     cp.add( theInput );                             //  Add to canvas
 
     theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
-    theOutput.setFont( f );                         //  Uses font  
+    theOutput.setFont( f );                         //  Uses font
+    theOutput.setBackground(Color.LIGHT_GRAY);
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
+    theSP.setBackground(Color.BLACK);
     rootWindow.setVisible( true );                  // Make visible
     theInput.requestFocus();                        // Focus is here
+
+
+
   }
 
   /**
