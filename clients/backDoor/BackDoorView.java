@@ -63,17 +63,21 @@ public class BackDoorView implements Observer
     theBtQuery.addActionListener(                   // Call back code
       e -> cont.doQuery( theInput.getText() ) );
     cp.add( theBtQuery );                           //  Add to canvas
+    theBtQuery.setForeground(Color.BLUE);
+
 
     theBtRStock.setBounds( 16, 25+60*1, 80, 40 );   // Check Button
     theBtRStock.addActionListener(                  // Call back code
       e -> cont.doRStock( theInput.getText(),
                           theInputNo.getText() ) );
     cp.add( theBtRStock );                          //  Add to canvas
+    theBtRStock.setForeground(Color.GREEN);
 
     theBtClear.setBounds( 16, 25+60*2, 80, 40 );    // Buy button 
     theBtClear.addActionListener(                   // Call back code
       e -> cont.doClear() );
     cp.add( theBtClear );                           //  Add to canvas
+    theBtClear.setForeground(Color.RED);
 
  
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area
@@ -83,6 +87,7 @@ public class BackDoorView implements Observer
     theInput.setBounds( 110, 50, 120, 40 );         // Input Area
     theInput.setText("");                           // Blank
     cp.add( theInput );                             //  Add to canvas
+    theInput.setBackground(Color.LIGHT_GRAY);
     
     theInputNo.setBounds( 260, 50, 120, 40 );       // Input Area
     theInputNo.setText("0");                        // 0
@@ -90,9 +95,11 @@ public class BackDoorView implements Observer
 
     theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
-    theOutput.setFont( f );                         //  Uses font  
+    theOutput.setFont( f );                         //  Uses font
+    theOutput.setBackground(Color.LIGHT_GRAY);
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
+    theSP.setBackground(Color.BLACK);
     rootWindow.setVisible( true );                  // Make visible
     theInput.requestFocus();                        // Focus is here
   }
