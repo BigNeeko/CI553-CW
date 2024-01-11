@@ -1,7 +1,6 @@
 package clients.customer;
 
 import catalogue.Basket;
-import catalogue.BetterBasket;
 import clients.Picture;
 import middle.MiddleFactory;
 import middle.StockReader;
@@ -11,11 +10,7 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- * Implements the Customer view.
- * @author  Mike Smith University of Brighton
- * @version 1.0
- */
+
 
 public class CustomerView implements Observer
 {
@@ -73,6 +68,7 @@ public class CustomerView implements Observer
     theBtClear.addActionListener(                   // Call back code
       e -> cont.doClear() );
     cp.add( theBtClear );                           //  Add to canvas
+    theBtClear.setForeground(Color.RED);
 
     theAction.setBounds( 110, 25 , 270, 20 );       // Message area
     theAction.setText( "" );                        //  Blank
@@ -81,12 +77,15 @@ public class CustomerView implements Observer
     theInput.setBounds( 110, 50, 270, 40 );         // Product no area
     theInput.setText("");                           // Blank
     cp.add( theInput );                             //  Add to canvas
+    theInput.setBackground(Color.lightGray);
     
     theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
     theOutput.setFont( f );                         //  Uses font  
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
+    theSP.setBackground(Color.BLACK);
+    theOutput.setBackground(Color.lightGray);
 
     thePicture.setBounds( 16, 25+60*2, 80, 80 );   // Picture area
     cp.add( thePicture );                           //  Add to canvas
