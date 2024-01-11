@@ -18,7 +18,7 @@ public class Basket extends ArrayList<Product> implements Serializable
 {
   private static final long serialVersionUID = 1;
   private int    theOrderNum = 0;          // Order number
-  
+
   /**
    * Constructor for a basket which is
    *  used to represent a customer order/ wish list
@@ -27,10 +27,11 @@ public class Basket extends ArrayList<Product> implements Serializable
   {
     theOrderNum  = 0;
   }
-  
+
+
   /**
    * Set the customers unique order number
-   * Valid order Numbers 1 .. N
+   * Valid order Numbers 1 . N
    * @param anOrderNum A unique order number
    */
   public void setOrderNum( int anOrderNum )
@@ -46,7 +47,7 @@ public class Basket extends ArrayList<Product> implements Serializable
   {
     return theOrderNum;
   }
-  
+
   /**
    * Add a product to the Basket.
    * Product is appended to the end of the existing products
@@ -57,14 +58,19 @@ public class Basket extends ArrayList<Product> implements Serializable
   // Will be in the Java doc for Basket
   @Override
   public boolean add( Product pr )
-  {                              
+  {
     return super.add( pr );     // Call add in ArrayList
   }
 
-  /**
-   * Returns a description of the products in the basket suitable for printing.
-   * @return a string description of the basket products
-   */
+  public boolean remove( Product pr) {
+    return super.remove( pr );
+  }
+
+  public double totalPrice(Product pr){
+      return pr.getPrice() * pr.getQuantity();
+
+  }
+
   public String getDetails()
   {
     Locale uk = Locale.UK;
@@ -74,7 +80,7 @@ public class Basket extends ArrayList<Product> implements Serializable
     double total = 0.00;
     if ( theOrderNum != 0 )
       fr.format( "Order number: %03d\n", theOrderNum );
-      
+
     if ( this.size() > 0 )
     {
       for ( Product pr: this )
@@ -85,7 +91,7 @@ public class Basket extends ArrayList<Product> implements Serializable
         fr.format("(%3d) ",     number );
         fr.format("%s%7.2f",    csign, pr.getPrice() * number );
         fr.format("\n");
-        total += pr.getPrice() * number;
+        total += totalPrice(pr);
       }
       fr.format("----------------------------\n");
       fr.format("Total                       ");
