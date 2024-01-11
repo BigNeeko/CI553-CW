@@ -1,6 +1,6 @@
 package clients.cashier;
 
-import catalogue.Basket;
+import catalogue.BetterBasket;
 import catalogue.Product;
 import debug.DEBUG;
 import middle.*;
@@ -18,7 +18,7 @@ public class CashierModel extends Observable
 
   private State       theState   = State.process;   // Current state
   private Product     theProduct = null;            // Current product
-  private Basket      theBasket  = null;            // Bought items
+  private BetterBasket      theBasket  = null;            // Bought items
 
   private String      pn = "";                      // Product being processed
 
@@ -47,7 +47,7 @@ public class CashierModel extends Observable
    * Get the Basket of products
    * @return basket
    */
-  public Basket getBasket()
+  public BetterBasket getBasket()
   {
     return theBasket;
   }
@@ -130,7 +130,44 @@ public class CashierModel extends Observable
     theState = State.process;                   // All Done
     setChanged(); notifyObservers(theAction);
   }
-  
+
+  public void doRemove(String productNum) {
+    String theAction = "";
+
+    if (theBasket != null) {
+      Product removedProduct = null;
+
+      for (Product product : theBasket) {
+        if (product.getProductNum().equals(productNum)) {
+          removedProduct = product;
+          break;
+        }
+      }
+      if (removedProduct != null) {
+        // Remove from the basket
+        theBasket.remove(removedProduct);
+        // Add back to the stock
+        try {
+          theStock.addStock(productNum, removedProduct.getQuantity());
+          theAction = "Removed product " + productNum + " from the basket. Product added back to the stock.";
+        } catch (StockException e) {
+          DEBUG.error("%s\n%s",
+                  "CashierModel.doRemove", e.getMessage());
+          theAction = e.getMessage();
+        }
+      } else {
+        theAction = "Product " + productNum + " not found in the basket";
+      }
+    } else {
+      theAction = "Basket is empty";
+    }
+
+    setChanged();
+    notifyObservers(theAction);
+  }
+
+
+
   /**
    * Customer pays for the contents of the basket
    */
@@ -156,7 +193,8 @@ public class CashierModel extends Observable
       theAction = e.getMessage();
     }
     theBasket = null;
-    setChanged(); notifyObservers(theAction); // Notify
+    setChanged();
+    notifyObservers(theAction); // Notify
   }
 
   /**
@@ -192,9 +230,9 @@ public class CashierModel extends Observable
    * return an instance of a new Basket
    * @return an instance of a new Basket
    */
-  protected Basket makeBasket()
+  protected BetterBasket makeBasket()
   {
-    return new Basket();
+    return new BetterBasket();
   }
 }
   
