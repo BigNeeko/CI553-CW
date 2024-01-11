@@ -1,6 +1,8 @@
 package clients.cashier;
 
 
+import catalogue.Product;
+
 /**
  * The Cashier Controller
  * @author M A Smith (c) June 2014
@@ -46,4 +48,11 @@ public class CashierController
   {
     model.doBought();
   }
+
+  public void doRemove(String productNum)
+  {
+    model.doRemove(productNum);
+  }
 }
+
+
