@@ -65,11 +65,14 @@ public class CollectView implements Observer
 
     theInput.setBounds( 110, 50, 270, 40 );         // Input Area
     theInput.setText("");                           // Blank
+      theInput.setBackground(Color.lightGray);
     cp.add( theInput );                             //  Add to canvas
 
     theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
-    theOutput.setFont( f );                         //  Uses font  
+    theOutput.setFont( f );                         //  Uses font
+      theOutput.setBackground(Color.lightGray);
+      theSP.setBackground(Color.BLACK);
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
     rootWindow.setVisible( true );                  // Make visible
